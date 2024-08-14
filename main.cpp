@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.setWindowTitle("txtcord");
-    w.setFixedSize(640, 480);
+    w.setMinimumSize(400, 300);
 
     w.show();
     return a.exec();

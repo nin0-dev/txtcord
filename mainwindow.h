@@ -1,10 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QLineEdit>
 #include <QMainWindow>
 #include <QProgressBar>
 #include <QPushButton>
 #include <QSlider>
+#include <QTextEdit>
 #include <QVBoxLayout>
 
 class MainWindow : public QMainWindow
@@ -16,8 +18,8 @@ public:
     ~MainWindow();
 private:
     QVBoxLayout *m_layout;
-    QPushButton *m_button;
-    QProgressBar *m_bar;
-    QSlider *m_slider;
+    QTextEdit *m_chatlog;
+    QLineEdit *m_box;
+    QPushButton *m_send;
 };
 #endif // MAINWINDOW_H
