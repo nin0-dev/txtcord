@@ -15,9 +15,13 @@ class MainWindow : public QMainWindow
 
 public:
     enum MessageType {Normal, System, Error};
+    enum AppState {Unauthed, Sane, PendingPassword, PendingOTP};
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+private slots:
+    void handleOutput();
 private:
+    AppState state = Unauthed;
     void addMessage(QString content, MainWindow::MessageType type = Normal);
     QVBoxLayout *m_layout;
     QTextEdit *m_chatlog;

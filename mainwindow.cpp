@@ -4,6 +4,33 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
+void MainWindow::handleOutput() {
+    QString content = m_box->text();
+    m_box->setText("");
+    switch(state) {
+    case Unauthed:
+        if(!content.startsWith("/login ")) {
+            addMessage("You are currently unauthenticated, you can't send messages or use commands!", Error);
+            return;
+        }
+        m_box->setEchoMode(QLineEdit::NoEcho);
+        m_box->setPlaceholderText("Enter your password");
+        state = PendingPassword;
+        addMessage(QString("Logging in as <b>%1</b>. Enter your password then press Enter. (you won't be able to see any characters)").arg(content.replace("/login ", "")), System);
+        break;
+    case Unauthed:
+        if(!content.startsWith("/login ")) {
+            addMessage("You are currently unauthenticated, you can't send messages or use commands!", Error);
+            return;
+        }
+        m_box->setEchoMode(QLineEdit::NoEcho);
+    m_box->setPlaceholderText("Enter your password");
+    state = PendingPassword;
+    addMessage(QString("Logging in as <b>%1</b>. Enter your password then press Enter. (you won't be able to see any characters)").arg(content.replace("/login ", "")), System);
+    break;
+}
+}
+
 void MainWindow::addMessage(QString content, MainWindow::MessageType type) {
     if(type == Normal) {
         m_chatlog->append(content);
@@ -12,7 +39,7 @@ void MainWindow::addMessage(QString content, MainWindow::MessageType type) {
         m_chatlog->append(QString("<span style=\"color:#00FFE5;\">[Sys] %1</p>").arg(content));
     }
     if(type == Error) {
-        m_chatlog->append(QString("<span style=\"color:#ff0000;\">Error: %1</p>").arg(content));
+        m_chatlog->append(QString("<span style=\"color:#ff2222;\">Error: %1</p>").arg(content));
     }
 }
 
@@ -39,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     chatboxLayout->addWidget(m_send);
     chatboxWidget->setLayout(chatboxLayout);
     m_layout->addWidget(chatboxWidget);
+    connect(m_box, SIGNAL(returnPressed()), this, SLOT(handleOutput()));
 }
 
 MainWindow::~MainWindow() {
